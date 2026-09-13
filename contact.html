@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Aman Chaurasia</title>
+  <meta name="description" content="Get in touch with Aman Chaurasia for collaboration, project inquiries, or feedback.">
+  <link rel="canonical" href="https://example.com/contact.html">
+  <meta property="og:title" content="Contact — Aman Chaurasia">
+  <meta property="og:description" content="Send a message.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#f7f4ec">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">Aman Chaurasia</a>
+      <nav class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <section class="hero" aria-labelledby="contact-heading">
+      <div class="wrap">
+        <h1 id="contact-heading">Get in touch</h1>
+        <p class="lede">Fill out the form below, or reach me directly on Instagram.
+          Every field can be reached and submitted using only the keyboard.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="form-heading">
+      <div class="wrap">
+        <h2 id="form-heading" class="visually-hidden">Contact form</h2>
+
+        <form action="#" method="post" novalidate>
+
+          <div class="form-field">
+            <label for="name">Full name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              autocomplete="name"
+              required
+              aria-required="true">
+          </div>
+
+          <div class="form-field">
+            <label for="email">Email address</label>
+            <span class="hint" id="email-hint">We'll only use this to reply to you.</span>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              required
+              aria-required="true"
+              aria-describedby="email-hint">
+          </div>
+
+          <fieldset>
+            <legend>Reason for contact</legend>
+            <div>
+              <input type="radio" id="reason-project" name="reason" value="project" checked>
+              <label for="reason-project">Project collaboration</label>
+            </div>
+            <div>
+              <input type="radio" id="reason-feedback" name="reason" value="feedback">
+              <label for="reason-feedback">Feedback on my work</label>
+            </div>
+            <div>
+              <input type="radio" id="reason-other" name="reason" value="other">
+              <label for="reason-other">Something else</label>
+            </div>
+          </fieldset>
+
+          <div class="form-field">
+            <label for="message">Message</label>
+            <span class="hint" id="message-hint">Minimum 20 characters.</span>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              required
+              aria-required="true"
+              aria-describedby="message-hint"
+              minlength="20"></textarea>
+          </div>
+
+          <button type="submit" class="btn">Send message</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Aman Chaurasia. Built by hand, with semantic HTML.</p>
+      <nav aria-label="Social links">
+        <ul class="social-links">
+          <li><a href="https://instagram.com/aman.chaurasiaa">Instagram<span class="visually-hidden"> (opens artwork profile)</span></a></li>
+          <li><a href="contact.html">Email</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>
