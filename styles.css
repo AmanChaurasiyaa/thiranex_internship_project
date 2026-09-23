@@ -1,0 +1,545 @@
+/* =====================================================================
+   AMAN CHAURASIYA — PORTFOLIO STYLES
+   Architecture: CSS Grid (page skeleton + gallery) + Flexbox (components)
+   Approach:     Mobile-first. Every rule below the "BASE" block is the
+                 mobile layout; @media (min-width: ...) blocks LAYER ON
+                 changes for bigger screens. Never write a desktop-first
+                 rule and try to undo it for mobile — it's backwards and
+                 you end up fighting your own CSS.
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. DESIGN TOKENS — CSS CUSTOM PROPERTIES
+   Every color, font, spacing and radius value used anywhere below is
+   read from a variable here — never a hard-coded hex code or px value
+   inside a component rule. That's what makes the dark theme below
+   possible with a SINGLE class toggle instead of rewriting every rule.
+   ===================================================================== */
+
+:root {
+  /* --- Color: light theme (default) --- */
+  --color-bg:              #F4F6F8;  /* page background */
+  --color-surface:         #FFFFFF;  /* cards, header, raised panels */
+  --color-surface-alt:     #EDF1F4;  /* subtly different section bg, for rhythm */
+  --color-text:            #1A2332;  /* primary text */
+  --color-text-muted:      #5B6472;  /* secondary text, captions */
+  --color-border:          #E1E5EA;
+  --color-primary:         #1F6F5C;  /* the ONE accent color — links, buttons, focus */
+  --color-primary-hover:   #17594A;
+  --color-primary-contrast:#FFFFFF;  /* text placed ON TOP of --color-primary */
+  --color-accent:          #C1662E;  /* used sparingly — e.g. the nav-brand dot */
+
+  --shadow-sm: 0 1px 2px rgba(16, 24, 32, 0.06);
+  --shadow-md: 0 12px 28px rgba(16, 24, 32, 0.10);
+
+  /* --- Typography ---
+     Two type families with distinct jobs, plus a monospace for
+     "code-flavoured" labels (skill tags, nav links) — a deliberate nod
+     to the subject matter (a developer's site) rather than decoration. */
+  --font-heading: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-body:    'IBM Plex Sans', 'Segoe UI', sans-serif;
+  --font-mono:    'IBM Plex Mono', 'Consolas', monospace;
+
+  /* Fluid type scale using clamp(min, preferred, max) — the size grows
+     smoothly with viewport width instead of jumping at breakpoints. */
+  --fs-sm:  clamp(0.85rem, 0.8rem + 0.2vw, 0.95rem);
+  --fs-base:clamp(1rem,    0.95rem + 0.25vw, 1.125rem);
+  --fs-lg:  clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-xl:  clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  --fs-2xl: clamp(2.25rem, 1.6rem + 3vw, 3.75rem);
+
+  --lh-tight:  1.15;
+  --lh-normal: 1.65;
+
+  /* --- Spacing scale (8px rhythm) — pick FROM this list, don't invent
+     one-off values like 13px or 22px. Consistency > precision here. */
+  --space-1: 0.5rem;   /* 8px  */
+  --space-2: 1rem;     /* 16px */
+  --space-3: 1.5rem;   /* 24px */
+  --space-4: 2rem;     /* 32px */
+  --space-5: 3rem;     /* 48px */
+  --space-6: 4.5rem;   /* 72px */
+  --space-7: 6rem;     /* 96px */
+
+  /* --- Layout --- */
+  --container-max: 1180px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+
+  /* --- Motion --- */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}
+
+/* --- Color: dark theme ---
+   Applied by toggling this class on <body> (see script.js). Because
+   every component reads var(--color-*) and never a literal color,
+   the entire site re-themes instantly — this is the whole point of
+   using custom properties for theming instead of two separate
+   stylesheets. Custom properties CASCADE, so setting them on <body>
+   re-scopes them for every element inside it. */
+.dark-theme {
+  --color-bg:              #10161D;
+  --color-surface:         #171F28;
+  --color-surface-alt:     #1B232C;
+  --color-text:            #E8EDF1;
+  --color-text-muted:      #94A1AD;
+  --color-border:          #2B3742;
+  --color-primary:         #4FBFAE;
+  --color-primary-hover:   #6ED0C1;
+  --color-primary-contrast:#0C1216;
+  --color-accent:          #E08A4D;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 16px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Respect users who've asked their OS to reduce motion. This overrides
+   every transition/animation declared anywhere else in the file. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* =====================================================================
+   2. RESET / BASE
+   ===================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  transition: background-color var(--transition-base), color var(--transition-base);
+
+  /* --- GRID: the page skeleton ---
+     Three rows: header (auto height), main (grows to fill leftover
+     space via 1fr), footer (auto height). This is what pins the
+     footer to the bottom on short pages without any sticky-footer
+     hacks — one of Grid's best party tricks. */
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+img, picture { max-width: 100%; display: block; }
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+ul { list-style: none; margin: 0; padding: 0; }
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  line-height: var(--lh-tight);
+  margin: 0 0 var(--space-2);
+  color: var(--color-text);
+}
+h2 { font-size: var(--fs-xl); }
+h3 { font-size: var(--fs-lg); }
+
+p { margin: 0 0 var(--space-2); color: var(--color-text-muted); }
+
+button { font: inherit; cursor: pointer; border: none; background: none; }
+
+/* Visible keyboard focus everywhere — don't ever set outline: none
+   without replacing it with something equally visible. */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Skip link: hidden until a keyboard user tabs to it, then jumps
+   straight past the nav to the main content. Small addition, real
+   accessibility win. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  z-index: 100;
+}
+.skip-link:focus {
+  left: var(--space-2);
+  top: var(--space-2);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-3);
+}
+
+
+/* =====================================================================
+   3. BUTTONS (shared component)
+   ===================================================================== */
+
+.btn {
+  display: inline-flex;         /* FLEX: centers icon+label if you add one */
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+.btn:hover, .btn:focus-visible { transform: translateY(-1px); }
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+.btn--primary:hover, .btn--primary:focus-visible {
+  background-color: var(--color-primary-hover);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+.btn--ghost:hover, .btn--ghost:focus-visible {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+
+/* =====================================================================
+   4. HEADER & NAV — FLEXBOX
+   Flex is the right tool here: one row of items that needs to spread
+   out and stay vertically centered. No two-dimensional layout needed.
+   ===================================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;            /* lets nav-links drop to their own line on mobile */
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+}
+
+.nav-brand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--color-text);
+}
+.nav-brand__dot { color: var(--color-accent); } /* the one accent flourish */
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  order: 3;             /* on mobile: push links to their own full-width row */
+  width: 100%;
+  justify-content: center;
+}
+.nav-links a {
+  position: relative;
+  color: var(--color-text);
+  padding-block: 4px;
+}
+/* Underline-on-hover using a pseudo-element instead of text-decoration —
+   gives control over thickness, color and an animated width. */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 0; height: 2px;
+  background-color: var(--color-primary);
+  transition: width var(--transition-fast);
+}
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after { width: 100%; }
+
+.theme-toggle {
+  display: flex;               /* FLEX: icon + label side by side */
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  color: var(--color-text);
+}
+.theme-toggle:hover { border-color: var(--color-primary); }
+
+@media (min-width: 700px) {
+  .nav-links {
+    order: 0;               /* back into normal row order */
+    width: auto;
+    justify-content: flex-start;
+  }
+}
+
+
+/* =====================================================================
+   5. HERO
+   ===================================================================== */
+
+.hero {
+  padding-block: var(--space-6) var(--space-5);
+  /* A quiet dotted "graph paper" texture — a small nod to sketching on
+     paper before sketching in code, without needing an image asset. */
+  background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.hero__inner {
+  display: flex;              /* FLEX: stack + align a handful of text blocks */
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  max-width: 640px;
+}
+
+.hero__intro {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.hero__name {
+  font-size: var(--fs-2xl);
+  margin: 0;
+}
+
+.hero__tagline {
+  font-size: var(--fs-lg);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+
+/* =====================================================================
+   6. ABOUT — GRID (2 columns at tablet+)
+   A genuinely two-dimensional layout: an avatar block sitting BESIDE
+   a text block, not above/below it. That's Grid's job, not Flexbox's.
+   ===================================================================== */
+
+.about { padding-block: var(--space-6); background-color: var(--color-surface-alt); }
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr;      /* mobile: single stacked column */
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.about__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  display: flex;                  /* FLEX: center the "AC" initials */
+  align-items: center;
+  justify-content: center;
+  /* Swap this whole block for <img src="your-photo.jpg" alt="Aman Chaurasiya">
+     whenever you have a real photo or illustration to use instead. */
+}
+
+@media (min-width: 700px) {
+  .about__grid {
+    grid-template-columns: auto 1fr;   /* avatar hugs its content, text fills the rest */
+  }
+}
+
+
+/* =====================================================================
+   7. SKILLS — GRID for groups, FLEX for the tags inside each group
+   ===================================================================== */
+
+.skills { padding-block: var(--space-6); }
+
+.skills-groups {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+.skill-group h3 { margin-bottom: var(--space-1); }
+
+.skill-tags {
+  display: flex;          /* FLEX: tags wrap like real chips, not a rigid grid */
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.skill-tags li {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  padding: 4px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+}
+
+@media (min-width: 600px) {
+  .skills-groups { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1000px) {
+  .skills-groups { grid-template-columns: repeat(3, 1fr); }
+}
+
+
+/* =====================================================================
+   8. PROJECTS — the requirement's headline example:
+   CSS GRID for the gallery, FLEXBOX inside each card.
+   ===================================================================== */
+
+.projects { padding-block: var(--space-6); }
+
+.projects-grid {
+  display: grid;
+  /* auto-fit + minmax = a self-adjusting gallery. The browser fits as
+     many 280px+ columns as will comfortably sit in the row, and
+     stretches them to fill the leftover space. Add a 3rd, 4th, 10th
+     project card and this line NEVER needs to change. */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.project-card {
+  display: flex;                 /* FLEX: vertical stack inside one card */
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+.project-card:hover, .project-card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.project-card__title { margin-bottom: var(--space-1); }
+
+.project-card__desc {
+  flex-grow: 1;      /* absorbs leftover height so short/long descriptions
+                        don't make cards uneven heights in the same row */
+}
+
+.project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--space-2);
+}
+.project-card__tags li {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-alt);
+  color: var(--color-text-muted);
+}
+
+.project-card__links {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: auto;   /* the classic Flexbox trick: pins this row to the
+                          card's bottom edge regardless of content above it */
+  font-weight: 600;
+  font-size: var(--fs-sm);
+}
+
+
+/* =====================================================================
+   9. CONTACT & FOOTER — FLEXBOX
+   ===================================================================== */
+
+.contact { padding-block: var(--space-6); }
+
+.contact__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  margin-top: var(--space-2);
+}
+
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-block: var(--space-3);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.social-links {
+  display: flex;
+  gap: var(--space-3);
+}
+
+
+/* =====================================================================
+   10. RESPONSIVE SUMMARY
+   Breakpoints used across this file, and why:
+     600px  — enough width for skills to go 2-up and stop feeling cramped
+     700px  — nav settles into one row; About becomes a real 2-col layout
+     1000px — skills go 3-up
+     1200px — container hits its max-width; content stops stretching
+              edge-to-edge on very wide monitors
+   Add breakpoints where YOUR content actually breaks, not at "standard"
+   device widths — resize a real browser window and watch for the point
+   things start looking cramped or oddly empty.
+   ===================================================================== */
+
+@media (min-width: 1200px) {
+  .hero { padding-block: var(--space-7) var(--space-6); }
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aman Chaurasiya — Web Developer &amp; CS Student</title>
+<meta name="description" content="Personal portfolio of Aman Chaurasiya, a B.Tech Computer Science student and front-end web developer based in Greater Noida, India.">
+
+<!-- Two font families with distinct jobs: Space Grotesk for headings,
+     IBM Plex Sans for body text, IBM Plex Mono for code-flavoured labels. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <nav class="navbar container" aria-label="Primary">
+    <span class="nav-brand">Aman<span class="nav-brand__dot">.</span>dev</span>
+
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <button id="theme-toggle" class="theme-toggle" aria-pressed="false" aria-label="Switch to dark mode">
+      <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+      <span class="theme-toggle__label">Dark</span>
+    </button>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <section class="hero">
+    <div class="hero__inner container">
+      <p class="hero__intro">B.Tech Computer Science student, Greater Noida</p>
+      <h1 class="hero__name">Aman Chaurasiya</h1>
+      <p class="hero__tagline">I build clean, responsive web interfaces — and sketch the ideas for them by hand before a single line of CSS gets written.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#projects">View projects</a>
+        <a class="btn btn--ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="about__grid container">
+      <div class="about__avatar" aria-hidden="true">AC</div>
+      <div class="about__content">
+        <h2>About</h2>
+        <p>I'm a Computer Science undergraduate at GL Bajaj Institute of Technology and Management, building real-world web projects while sharpening my fundamentals in Java and C. I care about interfaces that feel considered — every layout choice, spacing value and colour on this page is a variable, not a guess.</p>
+        <p>Outside of code, I draw — illustration and hand sketching that occasionally sneaks into how I think about UI composition.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="skills">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="skills-groups">
+        <div class="skill-group">
+          <h3>Languages</h3>
+          <ul class="skill-tags">
+            <li>Java</li>
+            <li>C</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>Web Development</h3>
+          <ul class="skill-tags">
+            <li>HTML5</li>
+            <li>CSS3</li>
+            <li>JavaScript</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>Tools &amp; Workflow</h3>
+          <ul class="skill-tags">
+            <li>Git &amp; GitHub</li>
+            <li>MS Office</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="projects">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+
+        <article class="project-card">
+          <h3 class="project-card__title">Personal Portfolio Website</h3>
+          <p class="project-card__desc">This site — a responsive portfolio showcasing my projects, skills and contact details, built with a focus on clean UI and mobile responsiveness.</p>
+          <ul class="project-card__tags">
+            <li>HTML5</li><li>CSS3</li><li>JavaScript</li>
+          </ul>
+          <div class="project-card__links">
+            <a href="https://portfolio-wine-mu-47k77uu7k6.vercel.app/">Live site</a>
+            <a href="https://github.com/AmanChaurasiyaa">Source</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h3 class="project-card__title">RYTHM — Daily Activity Tracker</h3>
+          <p class="project-card__desc">A task and activity tracker with dynamic UI updates for managing daily tasks, built with usability and everyday productivity in mind.</p>
+          <ul class="project-card__tags">
+            <li>HTML5</li><li>CSS3</li><li>JavaScript</li>
+          </ul>
+          <div class="project-card__links">
+            <a href="https://rythm-lime.vercel.app/">Live site</a>
+            <a href="https://github.com/AmanChaurasiyaa">Source</a>
+          </div>
+        </article>
+
+        <!-- Duplicate one <article class="project-card"> block per project
+             (e.g. your React/Firebase builds). The Grid in styles.css
+             reflows automatically — no layout code to touch. -->
+
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p>Open to internships and freelance web development work.</p>
+      <div class="contact__links">
+        <a href="mailto:amanchaurasiya711@gmail.com">Email</a>
+        <a href="https://github.com/AmanChaurasiyaa">GitHub</a>
+        <a href="https://www.linkedin.com/in/amanchaurasiyaa">LinkedIn</a>
+        <a href="https://instagram.com/aman.chaurasiaa">Instagram</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer__inner container">
+    <p>&copy; <span id="year"></span> Aman Chaurasiya. Built with HTML, CSS &amp; JavaScript.</p>
+    <div class="social-links">
+      <a href="https://github.com/AmanChaurasiyaa">GitHub</a>
+      <a href="https://www.linkedin.com/in/amanchaurasiyaa">LinkedIn</a>
+      <a href="https://instagram.com/aman.chaurasiaa">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
