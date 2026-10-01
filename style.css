@@ -1,0 +1,85 @@
+/* Design tokens: light by default, dark via [data-theme="dark"] */
+:root {
+  --bg: #f3f5fb; --surface: #ffffff; --ink: #172036; --muted: #667089;
+  --line: #e3e7f2; --accent: #3d5afe; --accent-ink: #ffffff; --danger: #d6344a;
+  --done: #1f9d6b; --shadow: 0 10px 30px rgba(23, 32, 54, .08);
+}
+[data-theme="dark"] {
+  --bg: #0e1322; --surface: #171e33; --ink: #e8ecf8; --muted: #8e98b5;
+  --line: #28314d; --accent: #7b8cff; --accent-ink: #0e1322; --danger: #ff6b81;
+  --done: #4ad6a0; --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}
+
+* { box-sizing: border-box; margin: 0; }
+body {
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg); color: var(--ink); min-height: 100vh;
+  display: flex; justify-content: center; padding: 1.25rem 1rem 3rem;
+  transition: background .25s, color .25s;
+}
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.app {
+  width: 100%; max-width: 560px; align-self: flex-start; margin-top: 4vh;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+  box-shadow: var(--shadow); padding: 1.25rem; transition: background .25s;
+}
+.app__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; }
+
+/* Buttons */
+.btn, .icon-btn, .filter {
+  border: 1px solid transparent; border-radius: 10px; cursor: pointer;
+  transition: transform .12s, background .2s, color .2s, border-color .2s;
+}
+.btn { padding: .65rem 1rem; font-weight: 700; }
+.btn:active, .icon-btn:active { transform: scale(.96); }
+.btn--primary { background: var(--accent); color: var(--accent-ink); }
+.btn--primary:hover { filter: brightness(1.08); }
+.btn--ghost { background: none; color: var(--muted); padding: .4rem .6rem; }
+.btn--ghost:hover { color: var(--danger); }
+.icon-btn { background: var(--bg); border-color: var(--line); width: 40px; height: 40px; font-size: 1.1rem; }
+.icon-btn:hover { border-color: var(--accent); }
+
+/* Add form */
+.add { display: flex; gap: .5rem; }
+.add input {
+  flex: 1; min-width: 0; padding: .7rem .9rem; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--bg);
+}
+.add input:focus { border-color: var(--accent); outline: none; }
+.error { color: var(--danger); font-size: .85rem; margin-top: .5rem; }
+
+/* Filters */
+.filters { display: flex; gap: .4rem; margin: 1rem 0 .5rem; }
+.filter { background: none; padding: .4rem .8rem; color: var(--muted); font-weight: 500; }
+.filter:hover { color: var(--ink); }
+.filter.is-active { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+
+/* List */
+.list { list-style: none; padding: 0; }
+.item {
+  display: flex; align-items: center; gap: .75rem; padding: .8rem .2rem;
+  border-bottom: 1px solid var(--line); animation: pop .2s ease-out;
+}
+@keyframes pop { from { opacity: 0; transform: translateY(-4px); } }
+.item__check { width: 20px; height: 20px; accent-color: var(--done); cursor: pointer; flex-shrink: 0; }
+.item__body { flex: 1; min-width: 0; }
+.item__text { overflow-wrap: anywhere; }
+.item__edit { width: 100%; padding: .4rem .6rem; border: 1px solid var(--accent); border-radius: 8px; background: var(--bg); }
+.item__meta { font-size: .75rem; color: var(--muted); margin-top: .15rem; display: flex; gap: .5rem; align-items: center; }
+.badge { padding: .05rem .45rem; border-radius: 99px; font-weight: 700; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
+.item.is-done .item__text { text-decoration: line-through; color: var(--muted); }
+.item.is-done .badge { background: color-mix(in srgb, var(--done) 18%, transparent); color: var(--done); }
+.item__actions { display: flex; gap: .15rem; opacity: .55; transition: opacity .2s; }
+.item:hover .item__actions, .item:focus-within .item__actions { opacity: 1; }
+.act { background: none; border: 0; cursor: pointer; padding: .35rem .5rem; border-radius: 8px; color: var(--muted); }
+.act:hover { background: var(--bg); color: var(--ink); }
+.act[data-action="delete"]:hover { color: var(--danger); }
+
+.empty { text-align: center; color: var(--muted); padding: 2rem 0; }
+.foot { display: flex; justify-content: space-between; align-items: center; margin-top: .75rem; color: var(--muted); font-size: .9rem; }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+@media (max-width: 420px) { .add { flex-direction: column; } }
