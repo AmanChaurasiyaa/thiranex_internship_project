@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deskwell – Desk gear for people who build things</title>
+  <meta name="description" content="Deskwell is a product catalog for keyboards, lighting, notebooks, audio and bags.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip" href="#app">Skip to content</a>
+  <header class="topbar">
+    <a class="brand" href="#/">Deskwell</a>
+    <nav aria-label="Main">
+      <a href="#/" data-nav="home">Catalog</a>
+      <a href="#/wishlist" data-nav="wishlist">Wishlist <span class="badge" id="wish-count">0</span></a>
+      <a href="#/cart" data-nav="cart">Cart <span class="badge" id="cart-count">0</span></a>
+    </nav>
+  </header>
+  <main id="app" tabindex="-1"></main>
+  <footer class="foot"><p>Deskwell – capstone project. Built with HTML, CSS and vanilla JavaScript modules.</p></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

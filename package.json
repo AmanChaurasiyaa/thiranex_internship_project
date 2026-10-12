@@ -1,0 +1,8 @@
+{
+  "name": "deskwell",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "npx serve .", "build": "node build.mjs" },
+  "devDependencies": { "esbuild": "^0.25.0" }
+}
